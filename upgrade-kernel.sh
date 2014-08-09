@@ -37,8 +37,8 @@ if [ -e linux-$KERNEL_VERSION ]; then
     # Make GRUB aware of the new version so it shows in the boot menu
     grub2-update || grub-update
     echo "Kernel $KERNEL_VERSION has been installed."
-    exit 1
+    exit 0
 else
     echo "failed to fetch kernel source"
-    exit 0
+    exit 1
 fi
