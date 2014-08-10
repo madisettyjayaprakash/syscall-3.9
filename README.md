@@ -15,10 +15,11 @@ This patch creates a system call (number 314) which increments an unsigned long 
    ``long sys_callcount(unsigned long * num);``
 
 To try out the system call compile /vagrant/callcount_example.c:
-    $ gcc /vagrant/callcount_example.c -o callcount_example
-    $ ./callcount_example
-    $ You've called me 1 times.
-    $ ./callcount_example
-    $ You've called me 2 times. 
 
+    $ gcc /vagrant/callcount_example.c -o callcount_example
+    $ ./callcount_example``
+    $ You've called me 1 times.``
+    $ ./callcount_example``
+    $ You've called me 2 times.``
+    
 <img src=".kernel.png"></img>
