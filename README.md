@@ -3,6 +3,8 @@ syscall-3.9
 
 A Vagrantfile which upgrades its kernel on boot.  A new [toy] system call is added in the process.
 
+<img src=".images/linux-compile.gif"></img>
+
 ## Usage
 
 `` vagrant up `` Then, once it finishes compiling the kernel run `` vagrant reload `` to have access to any features added from the patches directory. 
