@@ -30,3 +30,9 @@ Installs a new system call (number 315) that dumps mm_struct data to /var/log/sy
   ``long sys_getmminfo(void);``
 
 TODO
+
+## Systems Programming Day
+
+Tickets: https://www.eventbrite.com/e/systems-programming-day-tickets-12460107517
+
+Slides: https://docs.google.com/presentation/d/16Ke079yt8pjQ0XNVNEB7Jsv3URiqAVoebBaalAb9TW0/edit?usp=sharing
