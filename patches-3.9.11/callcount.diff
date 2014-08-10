@@ -1,0 +1,50 @@
+diff -uNr linux-3.9.11-orig/arch/x86/syscalls/syscall_64.tbl linux-3.9.11/arch/x86/syscalls/syscall_64.tbl
+--- linux-3.9.11-orig/arch/x86/syscalls/syscall_64.tbl	2013-07-21 00:16:17.000000000 +0000
++++ linux-3.9.11/arch/x86/syscalls/syscall_64.tbl	2014-08-10 06:25:43.000000000 +0000
+@@ -320,6 +320,7 @@
+ 311	64	process_vm_writev	sys_process_vm_writev
+ 312	common	kcmp			sys_kcmp
+ 313	common	finit_module		sys_finit_module
++314	common	callcount		sys_callcount	
+ 
+ #
+ # x32-specific system call numbers start at 512 to avoid cache impact
+diff -uNr linux-3.9.11-orig/include/linux/syscalls.h linux-3.9.11/include/linux/syscalls.h
+--- linux-3.9.11-orig/include/linux/syscalls.h	2013-07-21 00:16:17.000000000 +0000
++++ linux-3.9.11/include/linux/syscalls.h	2014-08-10 06:26:50.000000000 +0000
+@@ -897,4 +897,5 @@
+ asmlinkage long sys_kcmp(pid_t pid1, pid_t pid2, int type,
+ 			 unsigned long idx1, unsigned long idx2);
+ asmlinkage long sys_finit_module(int fd, const char __user *uargs, int flags);
++asmlinkage long sys_callcount(unsigned long * num);
+ #endif
+diff -uNr linux-3.9.11-orig/Makefile linux-3.9.11/Makefile
+--- linux-3.9.11-orig/Makefile	2013-07-21 00:16:17.000000000 +0000
++++ linux-3.9.11/Makefile	2014-08-10 06:27:35.000000000 +0000
+@@ -733,7 +733,7 @@
+ 
+ 
+ ifeq ($(KBUILD_EXTMOD),)
+-core-y		+= kernel/ mm/ fs/ ipc/ security/ crypto/ block/
++core-y		+= kernel/ mm/ fs/ ipc/ security/ crypto/ block/ mysyscalls/
+ 
+ vmlinux-dirs	:= $(patsubst %/,%,$(filter %/, $(init-y) $(init-m) \
+ 		     $(core-y) $(core-m) $(drivers-y) $(drivers-m) \
+diff -uNr linux-3.9.11-orig/mysyscalls/Makefile linux-3.9.11/mysyscalls/Makefile
+--- linux-3.9.11-orig/mysyscalls/Makefile	1970-01-01 00:00:00.000000000 +0000
++++ linux-3.9.11/mysyscalls/Makefile	2014-08-10 06:16:39.000000000 +0000
+@@ -0,0 +1 @@
++obj-y:=callcount.o
+diff -uNr linux-3.9.11-orig/mysyscalls/callcount.c linux-3.9.11/mysyscalls/callcount.c
+--- linux-3.9.11-orig/mysyscalls/callcount.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-3.9.11/mysyscalls/callcount.c	2014-08-10 06:15:56.000000000 +0000
+@@ -0,0 +1,9 @@
++#include <linux/linkage.h>
++#include <linux/kernel.h>
++static unsigned long count = 0;
++asmlinkage long sys_callcount(unsigned long * num)
++{
++    count++;
++    *num = count;
++    return 1;
++}
