@@ -9,7 +9,7 @@
 KERNEL_VERSION=3.9.11
 KERNEL_SRC_DIR=/usr/local/src
 
-apt-get install -y build-essential
+set -e
 
 mkdir -p $KERNEL_SRC_DIR
 cd $KERNEL_SRC_DIR
@@ -31,14 +31,14 @@ if [ -e linux-$KERNEL_VERSION ]; then
     # make oldconfig will prompt us for any options not set in our
     # existing config file
     make oldconfig
-    # j<num_of_processes> one seems like a nice default
-    make -j1
+    # j<num_of_processes> two seems like a nice default
+    make -j2
     # Now that the kernel is built we can take advantage of existing
     # helper scripts to handle installing drivers, settings up ramdisk,
     # and adding the image to /boot
     make modules_install install
-    # Make GRUB aware of the new version so it shows in the boot menu
-    update-grub2 || update-grub
+    # Make boot loader aware of the new version so it shows in the boot menu
+    update-grub2 || update-grub || update-burg
     echo "Kernel $KERNEL_VERSION has been installed."
     exit 0
 else
