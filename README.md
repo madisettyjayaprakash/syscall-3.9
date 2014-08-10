@@ -23,3 +23,10 @@ To try out the system call compile /vagrant/callcount_example.c:
     $ You've called me 1 times.``
     $ ./callcount_example``
     $ You've called me 2 times.``
+
+#### getmminfo.diff
+Installs a new system call (number 315) that dumps mm_struct data to /var/syslog.
+
+  ``long sys_getmminfo(void);``
+
+TODO
