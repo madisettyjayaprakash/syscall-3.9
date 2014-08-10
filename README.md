@@ -23,5 +23,3 @@ To try out the system call compile /vagrant/callcount_example.c:
     $ You've called me 1 times.``
     $ ./callcount_example``
     $ You've called me 2 times.``
-    
-<img src=".images/kernel.png"></img>
