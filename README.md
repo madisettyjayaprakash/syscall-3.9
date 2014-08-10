@@ -25,7 +25,7 @@ To try out the system call compile /vagrant/callcount_example.c:
     $ You've called me 2 times.``
 
 #### getmminfo.diff
-Installs a new system call (number 315) that dumps mm_struct data to /var/syslog.
+Installs a new system call (number 315) that dumps mm_struct data to /var/log/syslog.
 
   ``long sys_getmminfo(void);``
 
