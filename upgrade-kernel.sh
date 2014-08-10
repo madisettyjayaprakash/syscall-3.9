@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 
 ##
-# This script will download a kernel, compile it using the same settings as 
-# your current kernel, and add it to grub2 or grub if possible.
-# TODO: add automated patching prior to compilation
+# This script will download a kernel, apply patches, then compile it using 
+# the same settings as your current kernel, and add it to grub2, grub, or burg 
+# if possible.
 ##
+
+set -e
 
 KERNEL_VERSION=3.9.11
 KERNEL_SRC_DIR=/usr/local/src
 
-set -e
+# ALl of the patches in this directory will be applied prior to compilation
+KERNEL_PATCH_DIR=/usr/local/src/patches-$KERNEL_VERSION
 
 mkdir -p $KERNEL_SRC_DIR
 cd $KERNEL_SRC_DIR
@@ -31,12 +34,14 @@ if [ -e linux-$KERNEL_VERSION ]; then
     # make oldconfig will prompt us for any options not set in our
     # existing config file
     make oldconfig
+    make localmodconfig
     # j<num_of_processes> two seems like a nice default
     make -j2
     # Now that the kernel is built we can take advantage of existing
     # helper scripts to handle installing drivers, settings up ramdisk,
     # and adding the image to /boot
-    make modules_install install
+    make modules_install
+    make install
     # Make boot loader aware of the new version so it shows in the boot menu
     update-grub2 || update-grub || update-burg
     echo "Kernel $KERNEL_VERSION has been installed."
