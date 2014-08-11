@@ -17,11 +17,8 @@ KERNEL_PATCH_DIR=/vagrant/patches-$KERNEL_VERSION
 mkdir -p $KERNEL_SRC_DIR
 cd $KERNEL_SRC_DIR
 
-if [[ ! -e linux-$KERNEL_VERSION.tar.gz && ! -e linux-$KERNEL_VERSION ]]; then
-    wget https://www.kernel.org/pub/linux/kernel/v3.x/linux-$KERNEL_VERSION.tar.gz
-fi
-
 if [ ! -e linux-$KERNEL_VERSION ]; then
+    wget -nc https://www.kernel.org/pub/linux/kernel/v3.x/linux-$KERNEL_VERSION.tar.gz
     tar xvzf linux-$KERNEL_VERSION.tar.gz
 fi
 
