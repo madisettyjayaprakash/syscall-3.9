@@ -19,10 +19,10 @@ This patch creates a system call (number 314) which increments an unsigned long 
 To try out the system call compile /vagrant/callcount_example.c:
 
     $ gcc /vagrant/callcount_example.c -o callcount_example
-    $ ./callcount_example``
-    $ You've called me 1 times.``
-    $ ./callcount_example``
-    $ You've called me 2 times.``
+    $ ./callcount_example
+    $ You've called me 1 times.
+    $ ./callcount_example
+    $ You've called me 2 times.
 
 #### getmminfo.diff
 Installs a new system call (number 315) that dumps mm_struct data to /var/log/syslog.
