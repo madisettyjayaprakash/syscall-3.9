@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 unsigned long i = 0;
 unsigned long j = 0;
 int main() {
