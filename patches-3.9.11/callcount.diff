@@ -38,9 +38,8 @@ diff -uNr linux-3.9.11-orig/mysyscalls/Makefile linux-3.9.11/mysyscalls/Makefile
 diff -uNr linux-3.9.11-orig/mysyscalls/callcount.c linux-3.9.11/mysyscalls/callcount.c
 --- linux-3.9.11-orig/mysyscalls/callcount.c	1970-01-01 00:00:00.000000000 +0000
 +++ linux-3.9.11/mysyscalls/callcount.c	2014-08-10 06:15:56.000000000 +0000
-@@ -0,0 +1,9 @@
+@@ -0,0 +1,8 @@
 +#include <linux/linkage.h>
-+#include <linux/kernel.h>
 +static unsigned long count = 0;
 +asmlinkage long sys_callcount(unsigned long * num)
 +{
