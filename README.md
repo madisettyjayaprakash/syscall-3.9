@@ -25,7 +25,7 @@ To try out the system call compile /vagrant/callcount_example.c:
     $ You've called me 2 times.
 
 #### taskcount.diff
-Installs a new system call (315) which returns a count of all running tasks, and dumps a small amount of information about each one to /var/log/messages. 
+Installs a new system call (315) which writes a count of all running tasks, and dumps a small amount of information about each one to /var/log/messages. 
   ``long sys_taskcount(unsigned long * num);``
 
     $ gcc /vagrant/taskcount_example.c -o taskcount_example
