@@ -1,0 +1,56 @@
+diff -uNr linux-3.9.11-orig/arch/x86/syscalls/syscall_64.tbl linux-3.9.11/arch/x86/syscalls/syscall_64.tbl
+--- linux-3.9.11-orig/arch/x86/syscalls/syscall_64.tbl	2014-08-14 06:09:46.000000000 +0000
++++ linux-3.9.11/arch/x86/syscalls/syscall_64.tbl	2014-08-14 06:13:29.000000000 +0000
+@@ -321,6 +321,7 @@
+ 312	common	kcmp			sys_kcmp
+ 313	common	finit_module		sys_finit_module
+ 314	common	callcount		sys_callcount	
++315	common	taskcount		sys_taskcount
+ 
+ #
+ # x32-specific system call numbers start at 512 to avoid cache impact
+diff -uNr linux-3.9.11-orig/include/linux/syscalls.h linux-3.9.11/include/linux/syscalls.h
+--- linux-3.9.11-orig/include/linux/syscalls.h	2014-08-14 06:09:57.000000000 +0000
++++ linux-3.9.11/include/linux/syscalls.h	2014-08-14 06:12:39.000000000 +0000
+@@ -898,4 +898,5 @@
+ 			 unsigned long idx1, unsigned long idx2);
+ asmlinkage long sys_finit_module(int fd, const char __user *uargs, int flags);
+ asmlinkage long sys_callcount(unsigned long * num);
++asmlinkage long sys_taskcount(unsigned long * num);
+ #endif
+diff -uNr linux-3.9.11-orig/Makefile linux-3.9.11/Makefile
+--- linux-3.9.11-orig/Makefile	2014-08-14 06:09:49.000000000 +0000
++++ linux-3.9.11/Makefile	2014-08-14 06:11:43.000000000 +0000
+@@ -733,7 +733,7 @@
+ 
+ 
+ ifeq ($(KBUILD_EXTMOD),)
+-core-y		+= kernel/ mm/ fs/ ipc/ security/ crypto/ block/ mysyscalls/
++core-y		+= kernel/ mm/ fs/ ipc/ security/ crypto/ block/ mysyscalls/ mysyscalls2/
+ 
+ vmlinux-dirs	:= $(patsubst %/,%,$(filter %/, $(init-y) $(init-m) \
+ 		     $(core-y) $(core-m) $(drivers-y) $(drivers-m) \
+diff -uNr linux-3.9.11-orig/mysyscalls2/Makefile linux-3.9.11/mysyscalls2/Makefile
+--- linux-3.9.11-orig/mysyscalls2/Makefile	1970-01-01 00:00:00.000000000 +0000
++++ linux-3.9.11/mysyscalls2/Makefile	2014-08-14 06:11:12.000000000 +0000
+@@ -0,0 +1 @@
++obj-y:=taskcount.o
+diff -uNr linux-3.9.11-orig/mysyscalls2/taskcount.c linux-3.9.11/mysyscalls2/taskcount.c
+--- linux-3.9.11-orig/mysyscalls2/taskcount.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-3.9.11/mysyscalls2/taskcount.c	2014-08-14 06:11:12.000000000 +0000
+@@ -0,0 +1,15 @@
++#include <linux/linkage.h>
++#include <linux/kernel.h>
++#include <linux/sched.h>
++
++asmlinkage long sys_taskcount(unsigned long * num)
++{
++   unsigned long count = 0;
++   struct task_struct * task;
++   for_each_process(task) {
++       printk("counting task: %s %d\n", task->comm, task->pid);
++        count++; 
++   }
++   *num = count;
++   return 1;
++}

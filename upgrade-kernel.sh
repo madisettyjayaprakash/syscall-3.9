@@ -29,7 +29,7 @@ if [ -e linux-$KERNEL_VERSION ]; then
     # Apply patches
     for file in $KERNEL_PATCH_DIR/*
     do
-        patch -p1 <$file
+        if [ -e $file ]; then patch -p1 <$file; fi
     done
     
     if [ -e /vagrant/.config ]; then

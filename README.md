@@ -24,12 +24,13 @@ To try out the system call compile /vagrant/callcount_example.c:
     $ ./callcount_example
     $ You've called me 2 times.
 
-#### getmminfo.diff
-Installs a new system call (number 315) that dumps mm_struct data to /var/log/syslog.
+#### taskcount.diff
+Installs a new system call (315) which returns a count of all running tasks, and dumps a small amount of information about each one to /var/log/messages. 
+  ``long sys_taskcount(unsigned long * num);``
 
-  ``long sys_getmminfo(void);``
-
-TODO
+    $ gcc /vagrant/taskcount_example.c -o taskcount_example
+    $ ./taskcount_example
+    $ There system has X processes. 
 
 ## Systems Programming Day
 
