@@ -30,7 +30,7 @@ Installs a new system call (315) which returns a count of all running tasks, and
 
     $ gcc /vagrant/taskcount_example.c -o taskcount_example
     $ ./taskcount_example
-    $ There system has X processes. 
+    $ The system has X processes. 
 
 ## Systems Programming Day
 
