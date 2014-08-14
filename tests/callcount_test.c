@@ -5,7 +5,7 @@ int main() {
     syscall(314, &i);	
     j = i;
     syscall(314, &i);	
-    if (i = j + 1) {
+    if (i == j + 1) {
         return 0;
     }
     return 1;
