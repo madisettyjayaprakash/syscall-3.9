@@ -1,6 +1,7 @@
 #include <linux/linkage.h>
 #include <linux/kernel.h>
 #include <linux/sched.h>
+#include <asm/uaccess.h>
 
 asmlinkage long sys_taskcount(unsigned long * num)
 {
@@ -10,6 +11,7 @@ asmlinkage long sys_taskcount(unsigned long * num)
        printk("counting task: %s %d\n", task->comm, task->pid);
         count++; 
    }
-   *num = count;
+   if (copy_to_user(num, &count, sizeof(count)))
+       return -EFAULT;
    return 1;
 }
