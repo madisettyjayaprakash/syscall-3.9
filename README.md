@@ -20,18 +20,18 @@ Slides: https://docs.google.com/presentation/d/16Ke079yt8pjQ0XNVNEB7Jsv3URiqAVoe
 #### callcount.diff
 This patch creates a system call (number 314) which increments an unsigned long each time it's called and copies its value to the address passed in.
    
-To try out the system call compile /vagrant/callcount_example.c:
+To try out the system call compile /vagrant/src/examples/callcount_example.c:
 
-    $ gcc /vagrant/callcount_example.c -o callcount_example
+    $ gcc /vagrant/src/examples/callcount_example.c -o callcount_example
     $ ./callcount_example
-    $ You've called me 1 times.
+    You've called me 1 times.
     $ ./callcount_example
-    $ You've called me 2 times.
+    You've called me 2 times.
 
 #### taskcount.diff
 Installs a new system call (315) which writes a count of all running tasks, and dumps a small amount of information about each one to /var/log/messages. 
   ``long sys_taskcount(unsigned long * num);``
 
-    $ gcc /vagrant/taskcount_example.c -o taskcount_example
+    $ gcc /vagrant/src/examples/taskcount_example.c -o taskcount_example
     $ ./taskcount_example
-    $ The system has X processes. 
+    The system has X processes.
